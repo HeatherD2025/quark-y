@@ -11,7 +11,7 @@ const NewsFeed = () => {
   }, [dispatch]);
 
   const topics = ['space', 'physics', 'astrophysics'];
-  const unwantedPhrases = ['office space', 'storage space', 'reserved storage', 'space bar', 'space heater'];
+  const unwantedPhrases = ['office space', 'injured', 'killed', 'storage space', 'reserved storage', 'space bar', 'space heater'];
   
   //dedupicate the article by title
 const seenTitles = new Set();

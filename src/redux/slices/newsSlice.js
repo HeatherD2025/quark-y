@@ -3,7 +3,7 @@ import { scienceNewsApi } from "../../api/scienceNewsApi";
 
 export const getScienceNews = createAsyncThunk(
   "news/getScienceNews",
-  async () => {
+  async (_, thunkAPI) => {
     try {
       const articles = await scienceNewsApi();
       return articles;
