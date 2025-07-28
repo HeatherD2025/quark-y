@@ -1,50 +1,128 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getScienceNews } from '../redux/slices/newsSlice';
+import React from 'react';
+import { useGetScienceArticlesQuery } from '../api/scienceNewsApi';
+import { useGetSpaceArticlesQuery } from '../api/spaceNewsApi';
+import '../styles/landingPage.css';
 
 const NewsFeed = () => {
-  const dispatch = useDispatch();
-  const { articles, loading, error } = useSelector((state) => state.news);
+  const { data: scienceData, isLoading: loadingScience, error: errorScience } = useGetScienceArticlesQuery();
+  const { data: spaceData, isLoading: loadingSpace, error: errorSpace } = useGetSpaceArticlesQuery();
 
-  useEffect(() => {
-    dispatch(getScienceNews());
-  }, [dispatch]);
+  const articles = [
+    ...(scienceData?.articles || []),
+    ...(spaceData?.results || []), // rememeber spaceflight API uses `results`
+  ];
 
-  const topics = ['space', 'physics', 'astrophysics'];
-  const unwantedPhrases = ['office space', 'injured', 'killed', 'storage space', 'reserved storage', 'space bar', 'space heater'];
-  
-  //dedupicate the article by title
-const seenTitles = new Set();
-const uniqueArticles = articles.filter((article) => {
-  const title = article.title.trim();
-  if (seenTitles.has(title)) return false;
-  seenTitles.add(title);
-  return true;
-});
+  const topics = [
+    'space', 
+    'physics', 
+    'astrophysics',
+    'gravitational waves',
+    'quantum mechanics',
+    'quantum computing',
+    'quantum computer',
+    'quantum computers',
+    'theory of relativity',
+    'higgs field', 
+    'atom',
+    'electron',
+    'proton',
+    'neutron',
+    'boson',
+    'lepton',
+    'gluon',
+    'quark',
+    'CERN',
+    'LHC',
+    'large hadron collider', 
+    'LIGO', 
+    'mercury', 
+    'venus',
+    'mars',
+    'moon',
+    'jupiter',
+    'saturn',
+    'neptune',
+    'kuiper belt',
+    'oort cloud', 
+    'near-earth', 
+    'asteroid',
+    'supernova',
+    'black hole',
+    'wormhole', 
+  ];
 
+  const unwantedPhrases = [
+    'office space',
+    'injured',
+    'killed',
+    'storage space',
+    'reserved storage',
+    'space bar',
+    'space heater',
+    'safe space',
+    'office space',
+    'work space',
+    'workspace',
+    'lego',
+    'delivery space',
+    'investment',
+    'bought',
+    'buy',
+    'wallet',
+    'esports space',
+    'python',
+    'prime day',
+    'retreat',
+    'abstract design',
+    'elon musk',
+    'resting space',
+    'temporary space',
+    'moonbats',
+  ];
+
+  // Remove duplicates by title
+  const seenTitles = new Set();
+  const uniqueArticles = articles.filter((article) => {
+    const title = article.title.trim();
+    if (!title || seenTitles.has(title)) return false;
+    seenTitles.add(title);
+    return true;
+  });
+
+  // Filter by topic and keywords/unwanted keywords
   const filteredArticles = uniqueArticles.filter((article) => {
     const text = (article.title + ' ' + (article.description || '')).toLowerCase();
     const matchesTopic = topics.some((topic) => text.includes(topic));
     const containsUnwanted = unwantedPhrases.some((phrase) => text.includes(phrase));
-
     return matchesTopic && !containsUnwanted;
   });
 
-  if (loading) return <p>Loading articles...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loadingScience || loadingSpace) return <p>Loading articles...</p>;
+  if (errorScience || errorSpace) return <p>Error loading articles</p>;
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>Curated Science Articles</h2>
+   <>
+      <div className='newsheaderContainer'>
+        <h2 className='newsfeedHeader'>Quark-y Newsfeed</h2>
+      </div>
+    <div style={{ padding: '10rem' }}>
       {filteredArticles.length === 0 && <p>No relevant articles found.</p>}
       {filteredArticles.map((article, index) => (
-        <div key={index} style={{ marginBottom: '2rem', borderBottom: '1px solid #ccc', paddingBottom: '1rem' }}>
-          <h3>{article.title}</h3>
+        <div
+          className='articleDescription'
+          key={index}
+          style={{ 
+            marginBottom: '2rem', 
+            borderBottom: '1px solid #ccc', 
+            paddingBottom: '2rem',
+          }}
+        >
+          <h3 className='articleTitle'>{article.title}</h3>
           {article.urlToImage && (
             <img
+              className='articleImage'
               src={article.urlToImage}
               alt={article.title}
-              style={{ width: '100%', maxHeight: '300px', objectFit: 'cover', marginBottom: '0.5rem' }}
             />
           )}
           <p>{article.description}</p>
@@ -54,6 +132,7 @@ const uniqueArticles = articles.filter((article) => {
         </div>
       ))}
     </div>
+   </>
   );
 };
 

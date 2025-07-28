@@ -1,0 +1,31 @@
+div.articleDescription, p {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: '2rem';
+  border-bottom: '1px solid #ccc';
+  padding-bottom: '2rem';
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500em;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.articleImage {
+  width: 75%;
+}
+
+.newsfeedHeader {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(220, 219, 219);
+  padding-left: 1em;
+}
+
+.newsheaderContainer {
+  width: 100%;
+  height: 70px;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  margin-top: 10em;
+}

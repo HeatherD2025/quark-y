@@ -1,20 +1,20 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/userSlice";
-import newsReducer from "./slices/newsSlice";
-import { userApi } from "../api/userApi";
-import { scienceNewsApi } from "../api/scienceNewsApi";
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './slices/userSlice'
+import { scienceNewsApi } from '../api/scienceNewsApi';
+import { userApi } from '../api/userApi'; 
+import { spaceNewsApi } from '../api/spaceNewsApi';
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
-    news: newsReducer,
-    [userApi.reducerPath]: userApi.reducer,
     [scienceNewsApi.reducerPath]: scienceNewsApi.reducer,
+    [spaceNewsApi.reducerPath]: spaceNewsApi.reducer,
+    [userApi.reducerPath]: userApi.reducer, 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-     .concat(userApi.middleware)
-     .concat(scienceNewsApi.middleware),
+      .concat(scienceNewsApi.middleware)
+      .concat(spaceNewsApi.middleware)
+      .concat(userApi.middleware),
 });
 
 export default store;
