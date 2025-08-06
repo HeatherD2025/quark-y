@@ -2,6 +2,8 @@ import { useLoginMutation } from "../api/userApi";
 import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "../redux/slices/userSlice";
 import { useState } from "react";
+import { setToken } from "../utils/tokenService";
+import { removeToken } from "../utils/tokenService";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -9,21 +11,32 @@ const LoginForm = () => {
     const [form, setForm] = useState({ username: '', password: ''});
     const [apiError, setApiError] = useState(null);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const result = await login(form).unwrap();
-          dispatch(loginSuccess(result));
-        } catch (err) {
-          dispatch(loginFailure(err.data?.message || 'Login failed'));
-          setApiError(err.data?.message || 'Invalid username or password')
-        }
-    };
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const result = await login(form).unwrap();
+        setToken(result.token);
+        dispatch(loginSuccess(result));
+    } catch (err) {
+        dispatch(loginFailure(err.data?.message || 'Login failed'));
+        setApiError(err.data?.message || 'Invalid username or password');
+    }
+};
 
     return (
         <form onSubmit = {handleSubmit}>
-            <input type='text' placeholder='username' onChange={(e) => setForm({ ...form, username: e.target.value })}>Username</input>
-            <input type='text' placeholder='password' onChange={(e) => setForm({ ...form, password: e.target.value })}>Password</input>
+            <input 
+              type='text' 
+              placeholder='username'
+              value={ form.username } 
+              onChange={(e) => setForm({ ...form, username: e.target.value })}
+            />
+            <input 
+              type='text' 
+              placeholder='password' 
+              value={ form.password }
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+            />
             <button type='submit' disabled={isLoading}>Log In</button>
             {apiError && <p style={{ color: 'red' }}>{apiError}</p>}
         </form>
