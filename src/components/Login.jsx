@@ -20,7 +20,7 @@ const handleSubmit = async (e) => {
         setForm({ username: '', password: '' });
         setApiError(null);
     } catch (err) {
-        const message = err.data?.message || err?.error || 'Login failed'));
+        const message = err.data?.message || err?.error || 'Login failed',
         dispatch(loginFailure(message));
         setApiError(message);
     }
