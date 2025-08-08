@@ -1,7 +1,8 @@
 import React from 'react';
 import { useGetScienceArticlesQuery } from '../api/scienceNewsApi';
 import { useGetSpaceArticlesQuery } from '../api/spaceNewsApi';
-import '../styles/landingPage.css';
+import '../styles/home.css';
+import { useState } from 'react';
 
 const NewsFeed = () => {
   const { data: scienceData, isLoading: loadingScience, error: errorScience } = useGetScienceArticlesQuery();
@@ -13,76 +14,105 @@ const NewsFeed = () => {
   ];
 
   const topics = [
-    'space', 
-    'physics', 
+    'asteroid',
+    'atom',
     'astrophysics',
+    'black hole',
+    'boson',
+    'CERN',
+    'electron',
+    'gluon',
     'gravitational waves',
-    'quantum mechanics',
-    'quantum computing',
+    'higgs field',
+    'jupiter',
+    'kuiper belt',
+    'LHC',
+    'LIGO',
+    'large hadron collider',
+    'lepton',
+    'mars',
+    'mercury',
+    'moon',
+    'near-earth',
+    'neptune',
+    'neutron',
+    'oort cloud',
+    'physics',
+    'proton',
+    'quark',
     'quantum computer',
     'quantum computers',
-    'theory of relativity',
-    'higgs field', 
-    'atom',
-    'electron',
-    'proton',
-    'neutron',
-    'boson',
-    'lepton',
-    'gluon',
-    'quark',
-    'CERN',
-    'LHC',
-    'large hadron collider', 
-    'LIGO', 
-    'mercury', 
-    'venus',
-    'mars',
-    'moon',
-    'jupiter',
+    'quantum computing',
+    'quantum mechanics',
     'saturn',
-    'neptune',
-    'kuiper belt',
-    'oort cloud', 
-    'near-earth', 
-    'asteroid',
+    'space',
     'supernova',
-    'black hole',
-    'wormhole', 
+    'theory of relativity',
+    'venus',
+    'wormhole',
   ];
 
   const unwantedPhrases = [
-    'office space',
-    'injured',
-    'killed',
-    'storage space',
-    'reserved storage',
-    'space bar',
-    'space heater',
-    'safe space',
-    'office space',
-    'work space',
-    'workspace',
-    'energy space',
-    'lego',
-    'delivery space',
-    'space mountain',
-    'and space for',
-    'movie',
-    'film',
-    'investment',
-    'bought',
-    'buy',
-    'wallet',
-    'esports space',
-    'python',
-    'prime day',
-    'retreat',
     'abstract design',
+    'additional space',
+    'and space for',
+    'apparel',
+    'atomic bomb',
+    'bedroom',
+    'bought',
+    'bulova',
+    'business',
+    'graphics',
+    'buy',
+    'crypto',
+    'delivery space',
+    'detention space',
+    'disease',
     'elon musk',
-    'resting space',
-    'temporary space',
+    'energy space',
+    'episode',
+    'esports space',
+    'ESPN',
+    'film',
+    'hiroshima bombing',
+    'injured',
+    'investment',
+    'katy perry',
+    'killed',
+    'kitchen',
+    'lego',
+    'loan deal',
+    'living space',
+    'marketing',
+    'make space',
     'moonbats',
+    'moonstone',
+    'movie',
+    'nagasaki bombing',
+    'office space',
+    'office space',
+    'pepe',
+    'prime day',
+    'python',
+    'relaxed space',
+    'reserved storage',
+    'resting space',
+    'safe space',
+    'singer',
+    'space bar',
+    'space constraints',
+    'space heater',
+    'space mountain',
+    'steam launch',
+    'stock',
+    'stocks',
+    'storage space',
+    'temporary space',
+    'wallet',
+    'work space',
+    'wall street',
+    'workspace',
+    'xbox',
   ];
 
   // Remove duplicates by title
@@ -110,9 +140,10 @@ const NewsFeed = () => {
       <div className='newsheaderContainer'>
         <h2 className='newsfeedHeader'>Quark-y Newsfeed</h2>
       </div>
-    <div style={{ padding: '10rem' }}>
-      {filteredArticles.length === 0 && <p>No relevant articles found.</p>}
-      {filteredArticles.map((article, index) => (
+      <div classname="newsfeedContainer">
+      <div style={{ padding: '10rem' }}>
+        {filteredArticles.length === 0 && <p>No relevant articles found.</p>}
+        {filteredArticles.map((article, index) => (
         <div
           className='articleDescription'
           key={index}
@@ -128,6 +159,9 @@ const NewsFeed = () => {
               className='articleImage'
               src={article.urlToImage}
               alt={article.title}
+              style={{
+                width: '100%',
+              }}
             />
           )}
           <p>{article.description}</p>
@@ -136,6 +170,7 @@ const NewsFeed = () => {
           </a>
         </div>
       ))}
+     </div>
     </div>
    </>
   );

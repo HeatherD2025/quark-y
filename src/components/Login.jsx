@@ -1,9 +1,10 @@
 import { useLoginMutation } from "../api/userApi";
 import { useDispatch } from "react-redux";
-import { loginSuccess, loginFailure } from "../redux/slices/userSlice";
+import { loginSuccess, loginFailure, logout } from "../redux/slices/userSlice";
 import { useState } from "react";
-import { setToken } from "../utils/tokenService";
-import { removeToken } from "../utils/tokenService";
+import React from "react";
+import { getToken, setToken, removeToken } from "../utils/tokenService";
+import ReactiveButton from "reactive-button";
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,13 @@ const LoginForm = () => {
     const [form, setForm] = useState({ username: '', password: ''});
     const [apiError, setApiError] = useState(null);
 
+    const handleLogout = () => {
+        removeToken(setToken);
+        navigate('/home');
+    };
+
+
+    
 const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,7 +28,7 @@ const handleSubmit = async (e) => {
         setForm({ username: '', password: '' });
         setApiError(null);
     } catch (err) {
-        const message = err.data?.message || err?.error || 'Login failed',
+        const message = err.data?.message || err?.error || 'Login failed';
         dispatch(loginFailure(message));
         setApiError(message);
     }
@@ -35,15 +43,57 @@ const handleSubmit = async (e) => {
               onChange={(e) => setForm({ ...form, username: e.target.value })}
             />
             <input 
-              type='password' 
+              type='current-password' 
               placeholder='password' 
               value={ form.password }
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
-            <button type='submit' disabled={isLoading}>Log In</button>
+                            <span
+                  style={{
+                    marginRight: "15px",
+                    border: "solid var(--bs-body-bg)",
+                  }}
+                >
+                  {logout ? (
+                    <ReactiveButton
+                      rounded
+                      idleText={"LOGOUT"}
+                      type="button"
+                      variant="secondary"
+                      style={{
+                        width: "80px",
+                        backgroundColor: "#558e89",
+                        fontSize: "12px",
+                      }}
+                      // className=""
+                      onClick={handleLogout}
+                      navigate="/"
+                    >
+                      {loginSuccess}
+                    </ReactiveButton>
+                  ) : (
+                    <ReactiveButton
+                      rounded
+                      idleText={"LOGIN"}
+                      type="button"
+                      variant="secondary"
+                      style={{
+                        marginRight: "5px",
+                        backgroundColor: "#558e89",
+                        fontSize: "12px",
+                      }}
+                      className="navbar-right"
+                      onClick={handleLogout} // TODO make sure this is fine, I dont think its fine
+                    >
+                      {isLoggedIn}
+                    </ReactiveButton>
+                  )}
+                </span>
             {apiError && <p style={{ color: 'red' }}>{apiError}</p>}
         </form>
     );
 };
+
+
 
 export default LoginForm;
