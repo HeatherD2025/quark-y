@@ -23,6 +23,12 @@ export const userApi = createApi({
                 body: credentials,
             }),
         }),
+        logout: builder.mutation({
+            query: () => ({
+                url: '/logout',
+                method: 'POST',
+            }),
+        }),
         saveArticle: builder.mutation({
             query: (article) => ({
                 url: '/saved',
@@ -35,5 +41,6 @@ export const userApi = createApi({
 
 export const {
   useLoginMutation,
+  useLogoutMutation,
   useSaveArticleMutation,
 } = userApi;

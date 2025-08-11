@@ -9,8 +9,8 @@ export const scienceNewsApi = createApi({
   }),
   endpoints: (builder) => ({
     getScienceArticles: builder.query({
-      query: () =>
-        `everything?q=physics+OR+space+OR+astrophysics&language=en&pageSize=50&sortBy=publishedAt&apiKey=${NEWS_API_KEY}`,
+      query: ({ page = 1, pageSize = 10} = {}) =>
+        `everything?q=physics+OR+space+OR+astrophysics&language=en&page=${page}&pageSize=${pageSize}&sortBy=publishedAt&apiKey=${NEWS_API_KEY}`,
     }),
   }),
 });

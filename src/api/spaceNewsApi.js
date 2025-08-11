@@ -7,8 +7,8 @@ export const spaceNewsApi = createApi({
   }),
   endpoints: (builder) => ({
     getSpaceArticles: builder.query({
-      query: () =>
-        'articles?limit=50&ordering=-published_at',
+    query: ({ page = 1, pageSize = 10 } = {}) => 
+      `articles?_limit=${pageSize}&offset=${(page - 1) * pageSize}&ordering=-published_at`,
     }),
   }),
 });

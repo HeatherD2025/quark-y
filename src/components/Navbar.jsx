@@ -6,28 +6,6 @@ import { getToken } from "../utils/tokenService";
 
 const Navbar = () => {
     const navigate = useNavigate();
-    // const token = getToken();
-
-    // const [isLoggedIn, setIsLoggedIn] = useState('Login');
-    // const [isLoading, setisLoading] = useState('false');
-
-    // if (token) {
-    //     const {id} = jwtDecode(token);
-    //     userId = id;
-    // }
-
-    // useEffect(() => {
-    //     if (token) {
-    //         setIsLoggedIn('logout');
-    //     } else {
-    //         setIsLoggedIn('login');
-    //     }
-    // }, [token]);
-
-    // const handleLogout = () => {
-    //     deleteToken(token);
-    //     navigate('/home');
-    // };
 
     return (
         <nav className="navbar">
