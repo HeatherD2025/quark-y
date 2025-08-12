@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `${BASE_URL}/users`,
+        baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().user?.token || getToken();
       if (token) {
@@ -18,20 +18,20 @@ export const userApi = createApi({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (credentials) => ({
-                url: '/login',
+                url: '/auth/login',
                 method: 'POST',
                 body: credentials,
             }),
         }),
         logout: builder.mutation({
             query: () => ({
-                url: '/logout',
+                url: '/auth/logout',
                 method: 'POST',
             }),
         }),
         saveArticle: builder.mutation({
             query: (article) => ({
-                url: '/saved',
+                url: '/auth/saved',
                 method: 'POST',
                 body: article,
             }),

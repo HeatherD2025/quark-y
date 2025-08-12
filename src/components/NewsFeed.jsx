@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useGetScienceArticlesQuery } from "../api/scienceNewsApi";
 import { useGetSpaceArticlesQuery } from "../api/spaceNewsApi";
+import { getToken } from "../utils/tokenService";
 import "../styles/home.css";
 
 const NewsFeed = () => {
   // state declarations
   const [page, setPage] = useState(1);
   const [articlesShown, setArticlesShown] = useState([]);
+  const [hasToken, setHasToken] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  // authNeeded check
+  useEffect(() => {
+    const token = getToken();
+    setHasToken(!!token);
+  },[]);
 
   // data fetching hooks
   const {
@@ -23,6 +31,7 @@ const NewsFeed = () => {
     error: errorSpace,
   } = useGetSpaceArticlesQuery({ page, pageSize: 10 });
 
+  // button logic
   const handleLoadMore = () => { 
     setPage(prevPage => prevPage +1);
   };
@@ -115,6 +124,7 @@ const topics = [
     "esports space",
     "ESPN",
     "film",
+    'gathering space',
     "hiroshima bombing",
     "injured",
     "investment",
@@ -139,6 +149,7 @@ const topics = [
     "relaxed space",
     "reserved storage",
     "resting space",
+    'retail space',
     "safe space",
     "singer",
     "space bar",
@@ -212,12 +223,20 @@ const topics = [
                 />
               )}
               <p>{article.description}</p>
+
+              {hasToken ? (
               <a href={article.url} target="_blank" rel="noopener noreferrer">
                 Read full article
               </a>
+            ) : (
+              <p>Log in to read this article</p>
+            )}
             </div>
           ))}
-          <button onClick={handleLoadMore}>load more articles</button>
+
+          {hasMore && (
+            <button onClick={handleLoadMore}>load more articles</button>
+          )}
         </div>
       </div>
     </>

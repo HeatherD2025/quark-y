@@ -1,17 +1,11 @@
-import LoginForm from "../components/Login";
-import NewsFeed from "../components/NewsFeed";
-import Navbar from "../components/Navbar";
+import React from "react";
 
 const Home = () => {
-    return (
-        <>
-          <div className='backgroundHome'>
-            <Navbar />
-             <LoginForm />
-             <NewsFeed />
-          </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="backgroundHome"></div>
+    </>
+  );
+};
 
 export default Home;
