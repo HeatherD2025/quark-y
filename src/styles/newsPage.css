@@ -1,0 +1,16 @@
+.articleImage {
+    width: 50%;
+    height: auto;
+}
+
+.newsPageContainer {
+    width: 50%;
+    
+}
+
+.newsfeedHeader {
+   display: flex;
+   justify-content: space-around;
+   padding-top: 2em;
+   font-size: 2em;
+}

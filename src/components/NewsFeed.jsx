@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useGetScienceArticlesQuery } from "../api/scienceNewsApi";
 import { useGetSpaceArticlesQuery } from "../api/spaceNewsApi";
 import { getToken } from "../utils/tokenService";
-import "../styles/home.css";
 
 const NewsFeed = () => {
   // state declarations
@@ -16,24 +15,24 @@ const NewsFeed = () => {
   useEffect(() => {
     const token = getToken();
     setHasToken(!!token);
-  },[]);
+  }, []);
 
   // data fetching hooks
   const {
     data: scienceData,
     isLoading: loadingScience,
     error: errorScience,
-  } = useGetScienceArticlesQuery({ page, pageSize: 10 });
+  } = useGetScienceArticlesQuery({ page, pageSize: 20 });
 
   const {
     data: spaceData,
     isLoading: loadingSpace,
     error: errorSpace,
-  } = useGetSpaceArticlesQuery({ page, pageSize: 10 });
+  } = useGetSpaceArticlesQuery({ page, pageSize: 20 });
 
   // button logic
-  const handleLoadMore = () => { 
-    setPage(prevPage => prevPage +1);
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
   // useEffect updates articlesShown when data changes
@@ -53,27 +52,44 @@ const NewsFeed = () => {
     }
 
     if (
-      (scienceData && scienceData.articles?.length < 10) &&
-      (spaceData && spaceData.results?.length < 10)
+      scienceData &&
+      scienceData.articles?.length < 20 &&
+      spaceData &&
+      spaceData.results?.length < 20
     ) {
       setHasMore(false);
     }
 
     setLoading(false);
+
+    console.log(
+      "📦 Total fetched articles (articlesShown):",
+      articlesShown.length
+    );
   }, [scienceData, spaceData]);
 
   // filtering
-const topics = [
+  const topics = [
+    "antineutrino",
+    "antineutrinos",
+    "antimatter",
     "asteroid",
+    "astronaut",
     "atom",
+    "atoms",
     "astrophysics",
-    "black hole",
+    "hole",
     "boson",
     "CERN",
+    "cosmic",
+    "comet",
     "electron",
     "gluon",
+    "gravity",
     "gravitational waves",
+    "Hawking",
     "higgs field",
+    "hubble",
     "jupiter",
     "kuiper belt",
     "LHC",
@@ -83,18 +99,22 @@ const topics = [
     "mars",
     "mercury",
     "moon",
+    "multiverse",
+    "NASA",
     "near-earth",
     "neptune",
     "neutron",
+    "neutrino",
     "oort cloud",
     "physics",
+    "plasma",
+    "photon",
     "proton",
+    "qubit",
     "quark",
-    "quantum computer",
-    "quantum computers",
-    "quantum computing",
-    "quantum mechanics",
+    "quantum",
     "saturn",
+    "solar",
     "space",
     "supernova",
     "theory of relativity",
@@ -104,8 +124,8 @@ const topics = [
 
   const unwantedPhrases = [
     "abstract design",
-    "additional space",
-    "and space for",
+    // " additional space ",
+    "album",
     "apparel",
     "atomic bomb",
     "bedroom",
@@ -114,56 +134,45 @@ const topics = [
     "business",
     "graphics",
     "buy",
+    "CEO",
+    "cloudflare",
+    "condo",
+    "Cogent",
+    "comedian",
+    "comedians",
     "crypto",
-    "delivery space",
-    "detention space",
     "disease",
     "elon musk",
-    "energy space",
     "episode",
-    "esports space",
     "ESPN",
     "film",
-    'gathering space',
-    "hiroshima bombing",
+    "hiroshima",
     "injured",
     "investment",
+    "IP",
     "katy perry",
+    "kia",
     "killed",
     "kitchen",
     "lego",
-    "loan deal",
-    "living space",
+    "loan",
     "marketing",
-    "make space",
-    "moonbats",
-    "moonstone",
     "movie",
     "nagasaki bombing",
-    "office space",
-    "office space",
     "pepe",
-    'phone',
-    "prime day",
+    "phone",
+    "prime",
     "python",
-    "relaxed space",
-    "reserved storage",
-    "resting space",
-    'retail space',
-    "safe space",
+    "Re:",
+    "realty",
     "singer",
-    "space bar",
-    "space constraints",
-    "space heater",
-    "space mountain",
-    "steam launch",
+    "skyscraper",
+    "skyscrapers",
+    "steam",
     "stock",
     "stocks",
-    "storage space",
-    "temporary space",
+    "street",
     "wallet",
-    "work space",
-    "wall street",
     "workspace",
     "xbox",
   ];
@@ -177,6 +186,13 @@ const topics = [
     return true;
   });
 
+  console.log("🔍 Unique articles (no duplicates):", uniqueArticles.length);
+
+  // helper function
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
   // filter articles by topic and unwanted keywords
   const filteredArticles = uniqueArticles.filter((article) => {
     const text = (
@@ -184,24 +200,47 @@ const topics = [
       " " +
       (article.description || "")
     ).toLowerCase();
-    const matchesTopic = topics.some((topic) => text.includes(topic));
-    const containsUnwanted = unwantedPhrases.some((phrase) =>
-      text.includes(phrase)
-    );
-    return matchesTopic && !containsUnwanted;
+
+    const containsUnwanted = unwantedPhrases.some((phrase) => {
+      const regex = new RegExp(`\\b${escapeRegExp(phrase)}\\b`, "i");
+      return regex.test(text);
+    });
+    if (containsUnwanted) {
+      console.log("🚫 Excluded (unwanted phrase):", article.title);
+      return false; // Exclude regardless of topic
+    }
+
+    const matchesTopic = topics.some((topic) => {
+      const regex = new RegExp(`\\b${escapeRegExp(topic)}\\b`, "i");
+      return regex.test(text);
+    });
+
+    if (!matchesTopic) {
+      console.log("⛔️ Excluded (no topic match):", article.title);
+      return false;
+    }
+
+    return true; // Only articles with topic and no unwanted phrases
   });
+
+  console.log("✅ Final filtered articles:", filteredArticles.length);
 
   // loading and error states
   if (loadingScience || loadingSpace) return <p>Loading articles...</p>;
   if (errorScience || errorSpace) return <p>Error loading articles</p>;
 
+  console.log("📰 Final filtered articles to display:", filteredArticles);
+
   return (
     <>
-      <div className="newsheaderContainer">
-        <h2 className="newsfeedHeader">Quark-y Newsfeed</h2>
-      </div>
       <div className="newsfeedContainer">
-        <div style={{ padding: "10rem" }}>
+        <p className="newsfeedHeader">Quarky News</p>
+        <div
+          style={{
+            paddingRight: "10rem",
+            paddingLeft: "10rem",
+          }}
+        >
           {filteredArticles.length === 0 && <p>No relevant articles found.</p>}
           {filteredArticles.map((article, index) => (
             <div
@@ -225,12 +264,12 @@ const topics = [
               <p>{article.description}</p>
 
               {hasToken ? (
-              <a href={article.url} target="_blank" rel="noopener noreferrer">
-                Read full article
-              </a>
-            ) : (
-              <p>Log in to read this article</p>
-            )}
+                <a href={article.url} target="_blank" rel="noopener noreferrer">
+                  Read full article
+                </a>
+              ) : (
+                <p>Log in to read this article</p>
+              )}
             </div>
           ))}
 
