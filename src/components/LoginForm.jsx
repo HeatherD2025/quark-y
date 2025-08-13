@@ -1,15 +1,19 @@
 import { useLoginMutation } from "../api/userApi";
 import { useDispatch } from "react-redux";
-import { loginSuccess, loginFailure, logout } from "../redux/slices/userSlice";
+import { loginSuccess, loginFailure } from "../redux/slices/userSlice";
 import React, { useState } from "react";
 import { setToken } from "../utils/tokenService";
-import ReactiveButton from "reactive-button";
+// import ReactiveButton from "reactive-button";
+import MyReactiveButton from "./myReactiveButton";
+import { useNavigate } from "react-router-dom";
 
-const LoginForm = ({ setIsLoggedIn, setUserEmail }) => {
+
+const LoginForm = () => {
     const dispatch = useDispatch();
     const [login, {isLoading}] = useLoginMutation();
     const [form, setForm] = useState({ username: '', password: ''});
     const [apiError, setApiError] = useState(null);
+    const navigate = useNavigate();
    
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,16 +21,19 @@ const handleSubmit = async (e) => {
     try {
         const result = await login(form).unwrap();
         console.log('login result:', result)
+
         // saving token to local storage
         setToken(result.token);
+
+        // updating redux store
         dispatch(loginSuccess(result));
 
-        // updating my login state
-        setIsLoggedIn(true);
-        setUserEmail(result.user?.email || form.username);
-
+        // resetting form and error
         setForm({ username: '', password: '' });
         setApiError(null);
+
+        navigate('/Account');
+
     } catch (err) {
         const message = err.data?.message || err?.error || 'Login failed';
         dispatch(loginFailure(message));
@@ -53,20 +60,7 @@ const handleSubmit = async (e) => {
               required
             />
 
-            <ReactiveButton
-              type="submit"
-              rounded
-              idleText={"Login"}
-              loadingText={"Logging in..."}
-              successText={"Logged in"}
-              errorText={"Error logging in"}
-              style={{
-              width: "80px",
-              fontSize: "12px",
-              }}
-              buttonState={isLoading? 'loading': 'idle'}
-            />
-
+            <MyReactiveButton onClick={handleSubmit}>Login</MyReactiveButton>
             {apiError && (
         <div style={{ color: 'red', marginLeft: '10px' }}>{apiError}</div>
       )}

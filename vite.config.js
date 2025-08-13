@@ -8,4 +8,7 @@ export default defineConfig({
       '/api': 'http://localhost:5555', // adjust this to your backend URL and port
     },
   },
+  optimizeDeps: {
+    include: ['jwt-decode'],
+  },
 });

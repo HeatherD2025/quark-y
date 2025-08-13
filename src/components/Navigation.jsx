@@ -1,39 +1,44 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
-import { getToken, removeToken } from "../utils/tokenService";
+import React, { useContext } from "react";
+import { userContext } from "./ContextProvider";
+// import { getToken, removeToken } from "../utils/tokenService";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import LoginForm from "./LoginForm";
 import logo from "../logo/quarkyLogo.png";
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState(null);
-  const [username, setUsername] = useState(null);
+  const { authenticated, username, handleLogout } = useContext(userContext);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [userEmail, setUserEmail] = useState(null);
+//   const [username, setUsername] = useState(null);
 
-  useEffect(() => {
-    const token = getToken();
-    if (token) {
-      setIsLoggedIn(true);
-      try {
-        const decoded = jwtDecode(token);
-        setUserEmail(decoded.email || null);
-        setUsername(decoded.username || null);
-      } catch (error) {
-        console.error("Invalid token:", error);
-      }
-    } else {
-      setIsLoggedIn(false);
-      setUserEmail(null);
-      setUsername(null);
-    }
-  }, []);
+//   useEffect(() => {
+//     const token = getToken();
+//     if (token) {
+//       setIsLoggedIn(true);
+//       try {
+//         const decoded = jwtDecode(token);
+//         setUserEmail(decoded.email || null);
+//         setUsername(decoded.username || null);
+//       } catch (error) {
+//         console.error("Invalid token:", error);
+//       }
+//     } else {
+//       setIsLoggedIn(false);
+//       setUserEmail(null);
+//       setUsername(null);
+//     }
+//   }, []);
 
-  const handleLogout = () => {
-    removeToken();
-    setIsLoggedIn(false);
-    setUserEmail(null);
+//   const handleLogout = () => {
+//     removeToken();
+//     setIsLoggedIn(false);
+//     setUserEmail(null);
+//     navigate("/");
+//   };
+  const onLogoutClick = () => {
+    handleLogout();
     navigate("/");
   };
 
@@ -56,7 +61,7 @@ const Navigation = () => {
             <Nav.Link as={Link} to="/NewsPage">
               News
             </Nav.Link>
-            {isLoggedIn && (
+            {authenticated && (
               <Nav.Link as={Link} to="/Account">
                 Account
               </Nav.Link>
@@ -64,20 +69,17 @@ const Navigation = () => {
           </Nav>
 
           <Nav className="ms-auto">
-            {!isLoggedIn ? (
+            {!authenticated ? (
               <>
-                <LoginForm
-                  setIsLoggedIn={setIsLoggedIn}
-                  setUserEmail={setUserEmail}
-                />
+                <LoginForm />
                 <NavLink as={Link} to="/Register">
-                  Register
+                  <Button variant="outline-secondary">Register</Button>
                 </NavLink>
               </>
             ) : (
               <>
                 <Navbar.Text className="me-3">
-                  Welcome <strong>{username}</strong>
+                  Welcome <strong>{username || "User"}</strong>
                 </Navbar.Text>
                 <Button variant="outline-secondary" onClick={handleLogout}>
                   Logout
