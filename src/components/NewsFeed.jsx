@@ -185,6 +185,7 @@ const NewsFeed = () => {
     'MCU',
     "movie",
     "nagasaki",
+    'officers',
     "pepe",
     "phone",
     "prime",
@@ -204,6 +205,7 @@ const NewsFeed = () => {
     "stocks",
     "street",
     'superman',
+    'trailer',
     "wallet",
     "workspace",
     "xbox",
@@ -238,7 +240,6 @@ const NewsFeed = () => {
       return regex.test(text);
     });
     if (containsUnwanted) {
-      console.log("🚫 Excluded (unwanted phrase):", article.title);
       return false; // Exclude regardless of topic
     }
 
@@ -248,20 +249,15 @@ const NewsFeed = () => {
     });
 
     if (!matchesTopic) {
-      console.log("⛔️ Excluded (no topic match):", article.title);
       return false;
     }
 
     return true; // Only articles with topic and no unwanted phrases
   });
 
-  console.log("✅ Final filtered articles:", filteredArticles.length);
-
   // loading and error states
   if (loadingScience || loadingSpace) return <p>Loading articles...</p>;
   if (errorScience || errorSpace) return <p>Error loading articles</p>;
-
-  console.log("📰 Final filtered articles to display:", filteredArticles);
 
   return (
     <>
@@ -290,7 +286,7 @@ const NewsFeed = () => {
                   className="articleImage"
                   src={article.urlToImage}
                   alt={article.title}
-                  style={{ width: "30em", height: "auto" }}
+                  style={{ width: "40em", height: "auto" }}
                 />
               )}
               <p>{article.description}</p>

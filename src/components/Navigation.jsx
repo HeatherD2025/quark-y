@@ -9,34 +9,7 @@ import logo from "../logo/quarkyLogo.png";
 const Navigation = () => {
   const navigate = useNavigate();
   const { authenticated, username, handleLogout } = useContext(userContext);
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [userEmail, setUserEmail] = useState(null);
-//   const [username, setUsername] = useState(null);
 
-//   useEffect(() => {
-//     const token = getToken();
-//     if (token) {
-//       setIsLoggedIn(true);
-//       try {
-//         const decoded = jwtDecode(token);
-//         setUserEmail(decoded.email || null);
-//         setUsername(decoded.username || null);
-//       } catch (error) {
-//         console.error("Invalid token:", error);
-//       }
-//     } else {
-//       setIsLoggedIn(false);
-//       setUserEmail(null);
-//       setUsername(null);
-//     }
-//   }, []);
-
-//   const handleLogout = () => {
-//     removeToken();
-//     setIsLoggedIn(false);
-//     setUserEmail(null);
-//     navigate("/");
-//   };
   const onLogoutClick = () => {
     handleLogout();
     navigate("/");
@@ -81,7 +54,7 @@ const Navigation = () => {
                 <Navbar.Text className="me-3">
                   Welcome <strong>{username || "User"}</strong>
                 </Navbar.Text>
-                <Button variant="outline-secondary" onClick={handleLogout}>
+                <Button variant="outline-secondary" onClick={onLogoutClick}>
                   Logout
                 </Button>
               </>
