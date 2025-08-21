@@ -63,7 +63,7 @@ const NewsFeed = () => {
     setLoading(false);
 
     console.log(
-      "📦 Total fetched articles (articlesShown):",
+      "Total fetched articles (articlesShown):",
       articlesShown.length
     );
   }, [scienceData, spaceData]);
@@ -220,7 +220,7 @@ const NewsFeed = () => {
     return true;
   });
 
-  console.log("🔍 Unique articles (no duplicates):", uniqueArticles.length);
+  console.log("Unique articles (no duplicates):", uniqueArticles.length);
 
   // helper function
   function escapeRegExp(string) {

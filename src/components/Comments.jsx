@@ -37,6 +37,8 @@ const CommentForm = ({ articleUrl, userId }) => {
     }
   };
 
+  // add delete comment call below
+
   return (
     <form onSubmit={handleSubmit}>
         <textarea

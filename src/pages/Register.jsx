@@ -11,11 +11,12 @@ const registerNewUser = () => {
     const [register, {isLoading, error}] = useRegisterMutation();
     const navigate = useNavigate();
 
-      // stores data from login form
+    // store data from login form
     const [form, setForm] = useState({
         username: "",
         email: "",
         password: "",
+        avatar: "",
     });
     const [apiError, setApiError] = useState(null);
     const [passwordError, setPasswordError] = useState('')
@@ -33,7 +34,7 @@ const registerNewUser = () => {
     }));
     };
 
-      // Password validation 
+    // Password validation 
     const validatePassword = (password) => {
     const minLength = password.length >= 8;
     const hasCapital = /[A-Z]/.test(password);
@@ -49,39 +50,6 @@ const registerNewUser = () => {
     return !error;
   };
        
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    
-    // const { username, email, password } = form;
-
-    // if (!validatePassword(password)) return;
-
-    // try {
-    //   const result = await register({ username, email, password }).unwrap();
-    
-    //   // saving token to local storage
-    //   setToken(result.token);
-
-    //   console.log(token, 'token stored');
-    
-    //   // updating redux store
-    //   dispatch(registerSuccess(result));
-
-    //   console.log('registration success')
-    
-    //   // resetting form and error
-    //   setForm({ username: '', email: '', password: '' });
-    //   setApiError(null);
-    
-    //   navigate('/Account');
-    
-    //     } catch (err) {
-    //         const message = err.data?.message || err?.error || 'Registration failed';
-    //         dispatch(loginFailure(message));
-    //         setApiError(message);
-    //     }
-    // };
-
     const handleSubmit = async (e) => {
       e.preventDefault();
 
@@ -146,7 +114,10 @@ const registerNewUser = () => {
               {apiError && (
                 <div style={{ color: "red", marginBottom: "1rem" }}>{apiError}</div>
               )}
-
+        <Form.Group>
+            <Form.Label>Choose your avatar</Form.Label>
+            
+        </Form.Group>
         <Button type='submit'>Submit</Button>
         </Form>
     </div>

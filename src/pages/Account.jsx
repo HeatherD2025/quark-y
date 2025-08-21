@@ -1,7 +1,18 @@
+import React, { useContext } from "react";
+import { userContext } from "../components/ContextProvider";
+
 const Account = () => {
+
+    const { authenticated, username, handleLogout } = useContext(userContext);
+    // allow account editing, deletion
+    // allow post editing, deletion
+
     return (
         <>
-        <h2>TESTING ACCOUNT PAGE</h2>
+         <div className="accountPageContainer">
+          <h2>{username || "User"}</h2>
+           
+         </div>
         </>
     )
 }

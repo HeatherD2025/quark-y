@@ -1,10 +1,9 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
 import { userContext } from "./ContextProvider";
-// import { getToken, removeToken } from "../utils/tokenService";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import LoginForm from "./LoginForm";
-import logo from "../logo/quarkyLogo.png";
+import logo from "../assets/logo/quarkyLogo.png";
 
 const Navigation = () => {
   const navigate = useNavigate();
