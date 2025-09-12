@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken } from "../utils/tokenService";
 import { registerSuccess, loginFailure } from '../redux/slices/userSlice'
+import AvatarSelection from "../components/AvatarSelection";
 
 const registerNewUser = () => {
     const dispatch = useDispatch();
@@ -115,8 +116,7 @@ const registerNewUser = () => {
                 <div style={{ color: "red", marginBottom: "1rem" }}>{apiError}</div>
               )}
         <Form.Group>
-            <Form.Label>Choose your avatar</Form.Label>
-            
+            <AvatarSelection form={form} handleChange={handleChange} />
         </Form.Group>
         <Button type='submit'>Submit</Button>
         </Form>

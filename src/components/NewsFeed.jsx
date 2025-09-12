@@ -185,6 +185,7 @@ const NewsFeed = () => {
     'MCU',
     "movie",
     "nagasaki",
+    "neighbor",
     'officers',
     "pepe",
     "phone",

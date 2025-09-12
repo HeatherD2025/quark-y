@@ -1,29 +1,22 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import {  baseQuery } from './api';
 import { getToken } from '../utils/tokenService';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const userApi = createApi({
     reducerPath: 'userApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().user?.token || getToken();
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    }
-    }),
+    baseQuery,
+    tagTypes: ['User'],
     endpoints: (builder) => ({
+
         register: builder.mutation({
-            query: ({ username, email, password}) => ({
+            query: ({ username, email, password, avatar }) => ({
                 url: '/auth/register',
                 method: 'POST',
-                body: {username, email, password}
-            })
+                body: { username, email, password, avatar },
+            }),
         }),
-        
+
         login: builder.mutation({
             query: (credentials) => ({
                 url: '/auth/login',
@@ -31,12 +24,19 @@ export const userApi = createApi({
                 body: credentials,
             }),
         }),
+
         logout: builder.mutation({
             query: () => ({
                 url: '/auth/logout',
                 method: 'POST',
             }),
         }),
+
+        getMe: builder.query({
+            query: () => '/users/me',
+            provideTags: ['User'],
+        }),
+
         saveArticle: builder.mutation({
             query: (article) => ({
                 url: '/auth/saved',
@@ -51,5 +51,6 @@ export const {
   useRegisterMutation,
   useLoginMutation,
   useLogoutMutation,
+  useGetMeQuery,
   useSaveArticleMutation,
 } = userApi;

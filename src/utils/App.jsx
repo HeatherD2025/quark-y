@@ -13,10 +13,13 @@ function App() {
     <Router>
       <Navigation />
         <Routes>
+          {/* VISITOR ROUTES */}
           <Route path="/" element={<Home />} />
           <Route path="/newsPage" element={<NewsPage />} />
-          <Route path="/account" element={<Account />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<Register />} />
+          {/* USER PROTECTED ROUTES */}
+          <Route path="/account" element={<Account />} />
         </Routes>
     </Router>
   );

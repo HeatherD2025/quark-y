@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { userContext } from "../components/ContextProvider";
+import { useGetMeQuery } from "../api/userApi";
+import "../styles/account.css";
 
-const Account = () => {
+export default function Account() {
 
     const { authenticated, username, handleLogout } = useContext(userContext);
     // allow account editing, deletion
@@ -10,11 +12,12 @@ const Account = () => {
     return (
         <>
          <div className="accountPageContainer">
-          <h2>{username || "User"}</h2>
-           
+           <div className="backgroundContainer">
+             <div className="mainInfoContainer">
+                 <div className="userAccountBoxHeader">{username || "User"}</div>
+             </div>
+           </div>
          </div>
         </>
-    )
+    );
 }
-
-export default Account;
