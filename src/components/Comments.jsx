@@ -44,7 +44,7 @@ const CommentForm = ({ articleUrl, userId }) => {
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder = "leave a comment here"
+          placeholder = 'leave a comment here'
         />
         <button type='submit'>post</button>
         {error && <p style={{ color: 'red'}}>{error}</p>}

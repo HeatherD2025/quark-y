@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 
-function MyReactiveButton({ onClick, children, variant = "outline-secondary", ...props }) {
+function MyReactiveButton({ onClick, children, variant = 'outline-secondary', ...props }) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async (e) => {

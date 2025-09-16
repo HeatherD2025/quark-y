@@ -1,26 +1,37 @@
 import React from "react";
 import Navigation from "../components/Navigation";
 import Home from "../pages/Home";
-import Register from '../pages/Register'
+import RegistrationForm from "../components/RegistrationForm";
 import LoginForm from "../components/LoginForm";
-// import register when done
-import NewsPage from "../pages/NewsPage";
-import Account from '../pages/Account';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import News from "../pages/News";
+import Account from "../pages/Account";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute";
+import ContextProvider from "../components/ContextProvider";
+import "../styles/index.css";
 
 function App() {
   return (
     <Router>
-      <Navigation />
+      <ContextProvider>
+        <Navigation />
         <Routes>
           {/* VISITOR ROUTES */}
           <Route path="/" element={<Home />} />
-          <Route path="/newsPage" element={<NewsPage />} />
+          <Route path="/newsPage" element={<News />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<RegistrationForm />} />
           {/* USER PROTECTED ROUTES */}
-          <Route path="/account" element={<Account />} />
+          <Route 
+            path="/account" 
+            element={
+            <ProtectedRoute>
+                <Account />
+            </ProtectedRoute>
+            } 
+          />
         </Routes>
+      </ContextProvider>
     </Router>
   );
 }

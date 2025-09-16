@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useGetScienceArticlesQuery } from "../api/scienceNewsApi";
-import { useGetSpaceArticlesQuery } from "../api/spaceNewsApi";
-import { getToken } from "../utils/tokenService";
+import React, { useState, useEffect } from 'react';
+import { useGetScienceArticlesQuery } from '../features/news/scienceNewsApi';
+import { useGetSpaceArticlesQuery } from '../features/news/spaceNewsApi';
+import { getToken } from '../utils/tokenService';
 
 const NewsFeed = () => {
   // state declarations
@@ -63,153 +63,153 @@ const NewsFeed = () => {
     setLoading(false);
 
     console.log(
-      "Total fetched articles (articlesShown):",
+      'Total fetched articles (articlesShown):',
       articlesShown.length
     );
   }, [scienceData, spaceData]);
 
   // filtering
   const topics = [
-    "antineutrino",
-    "antineutrinos",
-    "antimatter",
-    "antiprotons",
-    "asteroid",
-    "astronaut",
-    "astronomy",
-    "astonomer",
-    "astonomers",
-    "atom",
-    "atoms",
-    "atomic",
-    "astrophysics",
-    "astrophysists",
-    "boson",
-    "CERN",
-    "centauri",
-    "cosmic",
-    "cosmology",
-    "comet",
-    "electron",
-    "electromagnetic",
-    "fermilab",
-    "galatic",
-    "galaxy",
-    "gluon",
-    "gravity",
-    "gravitational",
-    "Hawking",
-    "higgs",
-    "hubble",
-    "jupiter",
-    "kuiper",
-    "LHC",
-    "LIGO",
-    "hadron",
-    "lepton",
-    "light-years",
-    "mars",
-    "mercury",
-    "meteor",
-    "moon",
-    "multiverse",
-    "muon",
-    "NASA",
-    "near-earth",
-    "nebula",
-    "neptune",
-    "neutron",
-    "neutrino",
-    "observatory",
-    "oort cloud",
-    "orbit",
-    "physics",
-    "plasma",
-    "pluto",
-    "photon",
-    "proton",
-    "qubit",
-    "quark",
-    "quasar",
-    "quantum",
-    "quasiparticles",
-    "saturn",
-    "singularity",
-    "solar",
-    "space",
-    "subatomic",
-    "supernova",
-    "theory of relativity",
-    "universe",
-    "uranus",
-    "venus",
-    "wormhole",
+    'antineutrino',
+    'antineutrinos',
+    'antimatter',
+    'antiprotons',
+    'asteroid',
+    'astronaut',
+    'astronomy',
+    'astonomer',
+    'astonomers',
+    'atom',
+    'atoms',
+    'atomic',
+    'astrophysics',
+    'astrophysists',
+    'boson',
+    'CERN',
+    'centauri',
+    'cosmic',
+    'cosmology',
+    'comet',
+    'electron',
+    'electromagnetic',
+    'fermilab',
+    'galatic',
+    'galaxy',
+    'gluon',
+    'gravity',
+    'gravitational',
+    'Hawking',
+    'higgs',
+    'hubble',
+    'jupiter',
+    'kuiper',
+    'LHC',
+    'LIGO',
+    'hadron',
+    'lepton',
+    'light-years',
+    'mars',
+    'mercury',
+    'meteor',
+    'moon',
+    'multiverse',
+    'muon',
+    'NASA',
+    'near-earth',
+    'nebula',
+    'neptune',
+    'neutron',
+    'neutrino',
+    'observatory',
+    'oort cloud',
+    'orbit',
+    'physics',
+    'plasma',
+    'pluto',
+    'photon',
+    'proton',
+    'qubit',
+    'quark',
+    'quasar',
+    'quantum',
+    'quasiparticles',
+    'saturn',
+    'singularity',
+    'solar',
+    'space',
+    'subatomic',
+    'supernova',
+    'theory of relativity',
+    'universe',
+    'uranus',
+    'venus',
+    'wormhole',
   ];
 
   const unwantedPhrases = [
-    "album",
-    "apparel",
-    "bomb",
-    "baskets",
-    "bedroom",
-    "bought",
-    "bulova",
-    "business",
+    'album',
+    'apparel',
+    'bomb',
+    'baskets',
+    'bedroom',
+    'bought',
+    'bulova',
+    'business',
     'emotionally',
-    "graphics",
-    "buy",
-    "CEO",
-    "cloudflare",
-    "condo",
-    "Cogent",
-    "comedian",
-    "comedians",
-    "crypto",
-    "disease",
-    "elon",
-    "episode",
-    "ESPN",
-    "film",
-    "hiroshima",
-    "injured",
-    "investment",
-    "IP",
-    "katy",
-    "kia",
-    "killed",
-    "kitchen",
-    "lego",
-    "loan",
+    'graphics',
+    'buy',
+    'CEO',
+    'cloudflare',
+    'condo',
+    'Cogent',
+    'comedian',
+    'comedians',
+    'crypto',
+    'disease',
+    'elon',
+    'episode',
+    'ESPN',
+    'film',
+    'hiroshima',
+    'injured',
+    'investment',
+    'IP',
+    'katy',
+    'kia',
+    'killed',
+    'kitchen',
+    'lego',
+    'loan',
     'market',
-    "marketing",
+    'marketing',
     'MCU',
-    "movie",
-    "nagasaki",
-    "neighbor",
+    'movie',
+    'nagasaki',
+    'neighbor',
     'officers',
-    "pepe",
-    "phone",
-    "prime",
+    'pepe',
+    'phone',
+    'prime',
     'projector',
-    "python",
-    "Re:",
-    "realty",
+    'python',
+    'Re:',
+    'realty',
     'shoot',
-    "singer",
-    "skyscraper",
-    "skyscrapers",
+    'singer',
+    'skyscraper',
+    'skyscrapers',
     'smartwatch',
     'smartring',
     'smarthome',
-    "steam",
-    "stock",
-    "stocks",
-    "street",
+    'steam',
+    'stock',
+    'stocks',
+    'street',
     'superman',
     'trailer',
-    "wallet",
-    "workspace",
-    "xbox",
+    'wallet',
+    'workspace',
+    'xbox',
   ];
 
   // remove duplicates
@@ -221,23 +221,23 @@ const NewsFeed = () => {
     return true;
   });
 
-  console.log("Unique articles (no duplicates):", uniqueArticles.length);
+  console.log('Unique articles (no duplicates):', uniqueArticles.length);
 
   // helper function
   function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   // filter articles by topic and unwanted keywords
   const filteredArticles = uniqueArticles.filter((article) => {
     const text = (
       article.title +
-      " " +
-      (article.description || "")
+      ' ' +
+      (article.description || '')
     ).toLowerCase();
 
     const containsUnwanted = unwantedPhrases.some((phrase) => {
-      const regex = new RegExp(`\\b${escapeRegExp(phrase)}\\b`, "i");
+      const regex = new RegExp(`\\b${escapeRegExp(phrase)}\\b`, 'i');
       return regex.test(text);
     });
     if (containsUnwanted) {
@@ -245,7 +245,7 @@ const NewsFeed = () => {
     }
 
     const matchesTopic = topics.some((topic) => {
-      const regex = new RegExp(`\\b${escapeRegExp(topic)}\\b`, "i");
+      const regex = new RegExp(`\\b${escapeRegExp(topic)}\\b`, 'i');
       return regex.test(text);
     });
 
@@ -262,38 +262,38 @@ const NewsFeed = () => {
 
   return (
     <>
-      <div className="newsfeedContainer">
-        <p className="newsfeedHeader">Quarky News</p>
+      <div className='newsfeedContainer'>
+        <p className='newsfeedHeader'>Quarky News</p>
         <div
           style={{
-            paddingRight: "10rem",
-            paddingLeft: "10rem",
+            paddingRight: '10rem',
+            paddingLeft: '10rem',
           }}
         >
           {filteredArticles.length === 0 && <p>No relevant articles found.</p>}
           {filteredArticles.map((article, index) => (
             <div
-              className="articleDescription"
+              className='articleDescription'
               key={index}
               style={{
-                marginBottom: "2rem",
-                borderBottom: "1px solid #ccc",
-                paddingBottom: "2rem",
+                marginBottom: '2rem',
+                borderBottom: '1px solid #ccc',
+                paddingBottom: '2rem',
               }}
             >
-              <h3 className="articleTitle">{article.title}</h3>
+              <h3 className='articleTitle'>{article.title}</h3>
               {article.urlToImage && (
                 <img
-                  className="articleImage"
+                  className='articleImage'
                   src={article.urlToImage}
                   alt={article.title}
-                  style={{ width: "40em", height: "auto" }}
+                  style={{ width: '40em', height: 'auto' }}
                 />
               )}
               <p>{article.description}</p>
 
               {hasToken ? (
-                <a href={article.url} target="_blank" rel="noopener noreferrer">
+                <a href={article.url} target='_blank' rel='noopener noreferrer'>
                   Read full article
                 </a>
               ) : (

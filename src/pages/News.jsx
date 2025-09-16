@@ -1,8 +1,8 @@
 import React from 'react';
 import NewsFeed from '../components/NewsFeed';
-import '../styles/newsPage.css';
+import '../styles/news.css';
 
-const NewsPage = () => {
+const News = () => {
   return (
     <div>
         <NewsFeed />
@@ -13,4 +13,4 @@ const NewsPage = () => {
   );
 };
 
-export default NewsPage;
+export default News;
