@@ -2,8 +2,8 @@ import { useRegisterMutation } from "../features/user/userApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setToken } from "../utils/tokenService";
-// import AvatarSelection from "./AvatarSelection";
-import AvatarCarousel from "./AvatarCarousel";
+import AvatarSelection from "./AvatarSelection";
+// import AvatarCarousel from "./AvatarCarousel";
 
 const RegistrationForm = () => {
   const [register, { isLoading, error }] = useRegisterMutation();
@@ -14,7 +14,7 @@ const RegistrationForm = () => {
     username: "", 
     email: "", 
     password: "", 
-    avatar: "" 
+    avatarId: "" 
   });
 
   const handleSubmit = async (e) => {
@@ -34,7 +34,9 @@ const RegistrationForm = () => {
    } 
    try {
       const result = await register(form).unwrap();
+      console.log("form unwrapped")
       setToken(result.token);
+      console.log("token set:", result.token)
       navigate("/Account");
     } catch (err) {
       const message = err.data?.message || err?.error || 'Registration failed';
@@ -67,22 +69,20 @@ const RegistrationForm = () => {
         required
       />
       <input
-        type="current-password"
+        type="password"
         placeholder="password"
         value={form.password}
         onChange={(e) => setForm({ ...form, password: e.target.value })}
         className="form-control me-2 my-3"
         required
       />
-      <div className="carouselWrapper" style={{width: "15rem", height: "15rem",}}>
-          <AvatarCarousel form={form} handleChange={(selectedAvatar) => 
-            setForm({...form, avatar: selectedAvatar})
-          }/>
-      </div>
+      {/* <div className="carouselWrapper" style={{width: "15rem", height: "15rem",}}>
+          <AvatarCarousel handleChange={handleAvatarChange} />
+      </div> */}
 
-        {/* <AvatarSelection  form={form} handleChange={(e) => {
-          setForm({...form, avatar: e.target.value})
-        }}/> */}
+        <AvatarSelection  form={form} handleChange={(e) => {
+          setForm({...form, avatarId: e.target.value})
+        }}/>
       <button type="submit" disabled={isLoading}>{ isLoading ? 'Registering...' : 'Submit' }</button>
       {apiError && (
         <div style={{ color: "red", marginLeft: "10px" }}>{apiError}</div>

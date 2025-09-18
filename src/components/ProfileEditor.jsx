@@ -19,7 +19,7 @@ const ProfileEditor = () => {
       setFormData({
         username: user.username,
         email: user.email,
-        avatar: user.avatar,
+        avatarId: user.avatar,
       });
     }
   }, [user]);
@@ -31,7 +31,7 @@ const ProfileEditor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await editProfile(updatedData).unwrap();
+      await editProfile(formdData).unwrap();
       // PUT SUCCESS MESSAGE HERE
     } catch (error) {
       console.error("Failed to update Profile", error);

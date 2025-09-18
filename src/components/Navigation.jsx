@@ -1,16 +1,21 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import React, { useContext } from 'react';
-import { userContext } from './ContextProvider';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, Nav, Navbar, Button } from 'react-bootstrap';
+import { logout } from "../features/auth/authSlice";
 import LoginForm from './LoginForm';
 import logo from '../assets/logo/quarkyLogo.png';
 
 const Navigation = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-  const { authenticated, username, handleLogout } = useContext(userContext);
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
+  const username = user?.username;
 
   const onLogoutClick = () => {
-    handleLogout();
+    dispatch(logout());
     navigate('/');
   };
 
@@ -30,21 +35,22 @@ const Navigation = () => {
             <Nav.Link as={Link} to='/'>
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to='/NewsPage'>
+            <Nav.Link as={Link} to='/news'>
               News
             </Nav.Link>
-            {authenticated && (
-              <Nav.Link as={Link} to='/Account'>
+            {isAuthenticated && (
+              <Nav.Link as={Link} to='/account'>
                 Account
               </Nav.Link>
             )}
           </Nav>
 
           <Nav className='ms-auto'>
-            {!authenticated ? (
+            {!isAuthenticated ? (
               <>
+              
                 <LoginForm />
-                <NavLink as={Link} to='/Register'>
+                <NavLink as={Link} to='/register'>
                   <Button variant='outline-secondary'>Register</Button>
                 </NavLink>
               </>

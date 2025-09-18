@@ -4,7 +4,7 @@ import { getToken } from "/src/utils/tokenService.js";
 const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 export const baseQuery = fetchBaseQuery({
-  baseUrl: `${BASE_URL}/api`, // DOUBLE CHECK THIS
+  baseUrl: `${BASE_URL}/api/`, // DOUBLE CHECK THIS
   prepareHeaders: (headers) => {
     const LOCAL_TOKEN = getToken();
     if (LOCAL_TOKEN) {
@@ -14,10 +14,8 @@ export const baseQuery = fetchBaseQuery({
   },
 });
 
-const api = createApi({
+export const api = createApi({
   baseQuery,
-  tagTypes: ["User"],
-  endpoints: () => ({}),
+  tagTypes: [], // you can add common tags here if needed
+  endpoints: () => ({}), // empty base endpoints, to be extended
 });
-
-export default api;

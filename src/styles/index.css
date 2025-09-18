@@ -1,65 +1,70 @@
 /* Carousel Elements */
-.banner {
+/* .banner {
   width: 100%;
-  height: 250vh;
+  height: 80vh;
   text-align: center;
   overflow: hidden;
   position: relative;
 }
 
 .banner .slider {
-  position: absolute;
+  position: relative;
   width: 10rem;
   height: 10rem;
-  top: 5%;
+  top: 11%;
   left: calc(50% - 5rem);
   transform-style: preserve-3d;
-  transform: perspective(1000px);
-  animation: autoRun 110s linear infinite; 
-  &:hover {
-    animation-play-state: paused;
-    cursor: pointer;
-    
-  }
-}
-@keyframes autoRun{
+  transition: transform 0.6s ease-in-out;
+} */
+
+/* @keyframes autoRun{
     from{transform: perspective(1000px) rotateY(0deg);
     }to{
         transform: perspective(1000px) rotateY(-360deg)
     }
-}
+} */
 
-.banner .slider .item {
-  box-shadow: 10px 10px 10;
+/* .banner .slider .item {
   position: absolute;
-  inset: 0 0 0 0;
+  inset: 0;
   transform: rotateY(
       calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
     )
     translateZ(300px);
-}
+} */
 
-.banner .slider .item img {
+/* .banner .slider .item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  transition: box-shadow 0.6s ease-in-out;
-  &:hover {
-    box-shadow: 0 0 20px rgba(243, 243, 243, 0.9);
-    
-  }
+  transition: transform 0.6s ease-in-out, box-shadow 0.3s ease-in-out;
+} */
+img {
+  display: flex;
+  transform: scale(.75);
 }
+/* img:hover {
+  box-shadow: 0 0 20px rgba(243, 243, 243, 0.9);
+  transform: scale(1.1);
+  gap: 1rem;
+} */
 
-.selected img {
-  outline: 3px solid #b29eee;
-  transform: scale(1/1)
-}
-
-.carouselContainer {
+/* .carouselContainer {
   backdrop-filter: blur(10px);
   width: 50rem;
-  height: 25rem;
-  background-color: rgb(24, 24, 24);
+  height: 20rem;
+  background-color: rgb(20, 22, 46);
+} */
+
+/* .carouselButtons {
+  top: 10%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  transform: translateY(-27rem);
 }
 
+.carouselButtons:hover {
+  cursor: pointer
+} */

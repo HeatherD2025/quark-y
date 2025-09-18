@@ -1,5 +1,6 @@
 import React from 'react'; 
 import { Form, Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
 import avatar1 from '../assets/accountAvatarImages/avatar1.png';
 import avatar2 from '../assets/accountAvatarImages/avatar2.png';
 import avatar3 from '../assets/accountAvatarImages/avatar3.png';
@@ -26,16 +27,24 @@ return (
   <Form.Group controlId='formAvatar'>
     <Form.Label>Choose your avatar</Form.Label>
     <Row>
-      {avatars.map((avatar) => (
-         <Col xs={4} md={2} key={avatar.id} className='text-center'>
-            <Form.Check
-              type='radio'
-              name='avatar'
-              value={avatar.id}
-              checked={form.avatar === avatar.id}
-              onChange={handleChange}
-              id={`avatar-${avatar.id}`}
-              label={
+      {avatars.map((avatar) => {
+        const isSelected = form.avatarId === avatar.id;
+
+        return (
+         <Col xs={6} md={3} key={avatar.id} className='text-center mb-2' style={{minWidth: "8rem"}}>
+            <label 
+              htmlFor={`avatar-${avatar.id}`} 
+              style={{cursor: 'pointer'}}
+              >
+              <input
+                type='radio'
+                name='avatarId'
+                value={avatar.id}
+                checked={isSelected}
+                onChange={handleChange}
+                id={`avatar-${avatar.id}`}
+                style={{ display: 'none'}}
+              />
                 <img 
                 src={avatar.src}
                 alt={`Avatar ${avatar.id}`}
@@ -43,17 +52,15 @@ return (
                  width: "10rem",
                  height: "10rem",
                  borderRadius: "50%",
-                 objectFit: "cover",
-                 border: 
-                   form.avatar === avatar.id ? "3px solid #007bff" : "1px solid #ccc",
-                padding: "2px",
-                backgroundColor: "#fff"
+                 backgroundColor: "#191628ff",
+                 transform: isSelected ? 'scale(1.1)' : 'scale(.75)',
+                 transition: 'transform 0.2s ease-in-out',
                 }}
               />
-              }
-              />
+             </label>
          </Col>
-      ))}
+        )
+      })}
     </Row>
   </Form.Group>
  );

@@ -1,16 +1,14 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../api/baseApi";
+import { api } from "../api/baseApi";
 
-export const userApi = createApi({
+export const userApi = api.injectEndpoints({
   reducerPath: "userApi",
-  baseQuery,
   tagTypes: ["User"],
   endpoints: (builder) => ({
     register: builder.mutation({
-      query: ({ username, email, password, avatar }) => ({
+      query: ({ username, email, password, avatarId }) => ({
         url: "/auth/register",
         method: "POST",
-        body: { username, email, password, avatar },
+        body: { username, email, password, avatarId },
       }),
     }),
 
@@ -43,13 +41,13 @@ export const userApi = createApi({
       providesTags: ["User"],
     }),
 
-    saveArticle: builder.mutation({
-      query: (article) => ({
-        url: "/auth/saved",
-        method: "POST",
-        body: article,
-      }),
-    }),
+    // saveArticle: builder.mutation({
+    //   query: (article) => ({
+    //     url: "/auth/saved",
+    //     method: "POST",
+    //     body: article,
+    //   }),
+    // }),
   }),
 });
 
@@ -59,5 +57,5 @@ export const {
   useLogoutMutation,
   useGetMeQuery,
   useEditProfileMutation,
-  useSaveArticleMutation,
+  // useSaveArticleMutation,
 } = userApi;
