@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import store from "../redux/store";
 import { useDispatch } from "react-redux";
 import { initializeAuth } from "../features/auth/authSlice";
 
@@ -19,14 +18,14 @@ function App() {
   useEffect(() => {
     dispatch(initializeAuth());
   }, [dispatch]);
-  
+
   return (
         <Router>
-            <Navigation />
+          <Navigation />
             <Routes>
               {/* VISITOR ROUTES */}
               <Route path="/" element={<Home />} />
-              <Route path="/newsPage" element={<News />} />
+              <Route path="/news" element={<News />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegistrationForm />} />
               {/* USER PROTECTED ROUTES */}
@@ -34,7 +33,8 @@ function App() {
                 path="/account" 
                 element={
                 <ProtectedRoute>
-                    <Account />
+                  <Account />
+                    {/* <Route path="/user/:userId" element={<Account />}/> */}
                 </ProtectedRoute>
                 } 
               />

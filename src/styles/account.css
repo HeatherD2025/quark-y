@@ -1,3 +1,8 @@
+.accountContainer {
+  width: 20x;
+  height: 40px;
+  background-color: black;
+}
 .accountPageContainer {
   max-width: 1440px;
   display: grid;
@@ -12,7 +17,7 @@
 }
 .mainInfoContainer {
   border: 1px solid #ffffff74;
-  background-color: rgb(32, 32, 32);
+  background-color: rgb(225, 221, 221);
   max-width: 50rem;
   width: 100%;
   max-height: 60rem;
@@ -21,7 +26,7 @@
   margin-top: 5rem;
 }
 .userAccountBoxHeader {
-  color: #ffffff74;
+  color: #14121c74;
   font-family: "Courier New", Courier, monospace;
   font-size: x-large;
 

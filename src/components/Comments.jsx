@@ -8,7 +8,7 @@ const CommentForm = ({ articleUrl, userId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItme('token');
+    const token = localStorage.getItem('token');
 
     try {
         const response = await fetch(`/articles/${articleUrl/comments}`, {

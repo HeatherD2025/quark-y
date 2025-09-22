@@ -1,4 +1,5 @@
 import { useLoginMutation } from "../features/user/userApi";
+import { useGetUserQuery } from "../features/user/userApi";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,25 +10,25 @@ const LoginForm = () => {
   const [login, { isLoading, error }] = useLoginMutation();
   const [form, setForm] = useState({ username: "", password: "" });
   const [apiError, setApiError] = useState(null);
-
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/account", { replace: true });
-    }
-  }, [isAuthenticated, navigate])
+
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const { data: userData, refetch: refetchUser } = useGetUserQuery(undefined, {
+  skip: !isAuthenticated,
+});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const result = await login(form).unwrap();
-      setToken(result.token);
+      console.log("login result:", result);
+
       // resetting form and error
       setForm({ username: "", password: "" });
       setApiError(null);
+      navigate("/account", { replace: true });
 
     } catch (err) {
       const message = err.data?.message || err?.error || "Login failed";

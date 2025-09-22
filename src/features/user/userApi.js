@@ -13,11 +13,12 @@ export const userApi = api.injectEndpoints({
     }),
 
     login: builder.mutation({
-      query: (credentials) => ({
+      query: ({ username, password }) => ({
         url: "/auth/login",
         method: "POST",
-        body: credentials,
+        body: { username, password },
       }),
+      providesTags: ["User"],
     }),
 
     logout: builder.mutation({
@@ -36,9 +37,13 @@ export const userApi = api.injectEndpoints({
       invalidatesTags: ["User"],
     }),
 
-    getMe: builder.query({
-      query: () => "/users/me",
+    getUser: builder.query({
+      query: (id) => ({
+        url: `/users/me`,
+        method: "GET",
       providesTags: ["User"],
+    }),
+    invalidatesTags: ["User"],
     }),
 
     // saveArticle: builder.mutation({
@@ -55,7 +60,7 @@ export const {
   useRegisterMutation,
   useLoginMutation,
   useLogoutMutation,
-  useGetMeQuery,
+  useGetUserQuery,
   useEditProfileMutation,
   // useSaveArticleMutation,
 } = userApi;

@@ -48,7 +48,7 @@ const Navigation = () => {
           <Nav className='ms-auto'>
             {!isAuthenticated ? (
               <>
-              
+
                 <LoginForm />
                 <NavLink as={Link} to='/register'>
                   <Button variant='outline-secondary'>Register</Button>

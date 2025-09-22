@@ -9,7 +9,7 @@ export const initializeAuth = createAsyncThunk(
   "auth/initializeAuth",
   async (_, thunkAPI) => {
     const token = getToken();
-    const decoded = jwtDecode.default(token);
+    const decoded = jwtDecode(token);
 
     if (!token) {
       return { isAuthenticated: false, user: null, accessToken: null }

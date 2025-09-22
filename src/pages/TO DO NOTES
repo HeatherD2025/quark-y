@@ -1,3 +1,7 @@
 Use async to demonstrate ES Module improvement over common js
 lazy load on scrolling for pics and news apps, comments, etc
 allow users to like articles, save articles 
+
+look into using httpOnly cookies instead of localStorage (not required, but recommended in sensitive apps)
+
+Use a refresh token rotation strategy on the backend if not already
