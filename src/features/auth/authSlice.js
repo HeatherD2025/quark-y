@@ -9,10 +9,9 @@ export const initializeAuth = createAsyncThunk(
   "auth/initializeAuth",
   async (_, thunkAPI) => {
     const token = getToken();
-    const decoded = jwtDecode(token);
 
     if (!token) {
-      return { isAuthenticated: false, user: null, accessToken: null }
+      return { isAuthenticated: false, user: null, token: null }
     }
 
     try {
@@ -26,11 +25,11 @@ export const initializeAuth = createAsyncThunk(
       return {
         isAuthenticated: true,
         user,
-        accessToken: token,
+        token: token,
       };
     } catch (error) {
       removeToken();
-      return { isAuthenticated: false, user: null, accessToken: null}
+      return { isAuthenticated: false, user: null, token: null}
     }
   }
 );
@@ -39,7 +38,7 @@ export const initializeAuth = createAsyncThunk(
 const initialState = {
   isAuthenticated: false,
   user: null,
-  accessToken: null,
+  token: null,
 };
 
 const authSlice = createSlice({
@@ -49,7 +48,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
-      state.accessToken = null;
+      state.token = null;
       removeToken();
     },
   },
@@ -58,7 +57,7 @@ const authSlice = createSlice({
     .addCase(initializeAuth.fulfilled, (state, action) => {
       state.isAuthenticated = action.payload.isAuthenticated;
       state.user = action.payload.user;
-      state.accessToken = action.payload.accessToken;
+      state.token = action.payload.token;
     })
 
       .addMatcher(
@@ -66,7 +65,7 @@ const authSlice = createSlice({
         (state, { payload }) => {
           setToken(payload.token);
           state.isAuthenticated = true;
-          state.accessToken = payload.token;
+          state.token = payload.token;
           state.user = payload.user;
         }
       )
@@ -75,7 +74,7 @@ const authSlice = createSlice({
         (state, { payload }) => {
           setToken(payload.token);
           state.isAuthenticated = true;
-          state.accessToken = payload.token;
+          state.token = payload.token;
           state.user = payload.user;
         }
       )
@@ -85,7 +84,7 @@ const authSlice = createSlice({
           removeToken();
           state.isAuthenticated = false;
           state.user = null;
-          state.accessToken = null;
+          state.token = null;
         }
       );
   },
@@ -93,45 +92,3 @@ const authSlice = createSlice({
 
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;
-
-// // register
-// const registerSlice = createSlice({
-//   name: 'siteRegister',
-//   initialState: {},
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addMatcher(api.endpoints.register.matchFulfilled, storeToken);
-//   },
-// });
-
-// const loginSlice = createSlice({
-//   name: 'siteLogin',
-//   initialState: {},
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addMatcher(api.endpoints.login.matchFulfilled, storeToken);
-//   },
-// });
-
-// const getAllUsersSlice = createSlice({
-//   name: 'getAllUsers',
-//   initialState: {},
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addMatcher(api.endpoints.getAllUsers.matchFulfilled);
-//   },
-// });
-
-// const updateUserProfileSlice = createSlice({
-//   name: 'updateUserProfile',
-//   initialState: {},
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addMatcher(api.endpoints.updateUserProfile.matchFulfilled);
-//   },
-// });
-
-// export const siteRegisterReducer = registerSlice.reducer;
-// export const siteLoginReducer = loginSlice.reducer;
-// export const getAllUsersReducer = getAllUsersSlice.reducer;
-// export const updateUserProfileReducer = updateUserProfileSlice.reducer;

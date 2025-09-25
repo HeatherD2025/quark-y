@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useGetScienceArticlesQuery } from '../features/news/scienceNewsApi';
 import { useGetSpaceArticlesQuery } from '../features/news/spaceNewsApi';
 import { getToken } from '../utils/tokenService';
+import { useNavigate } from 'react-router-dom';
 
 const NewsFeed = () => {
   // state declarations
@@ -10,6 +11,7 @@ const NewsFeed = () => {
   const [hasToken, setHasToken] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // authNeeded check
   useEffect(() => {
@@ -34,6 +36,11 @@ const NewsFeed = () => {
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
+
+  const handleArticleDetail = (articleUrl) => {
+    navigate(`/article/${encodeURIComponent(articleUrl)}`)
+    console.log('attempting to navigate')
+  }
 
   // useEffect updates articlesShown when data changes
   useEffect(() => {
@@ -162,6 +169,7 @@ const NewsFeed = () => {
     'cloudflare',
     'condo',
     'Cogent',
+    'combat',
     'comedian',
     'comedians',
     'crypto',
@@ -172,6 +180,7 @@ const NewsFeed = () => {
     'film',
     'hiroshima',
     'injured',
+    'injuries',
     'investment',
     'IP',
     'katy',
@@ -189,6 +198,7 @@ const NewsFeed = () => {
     'officers',
     'pepe',
     'phone',
+    'plot',
     'prime',
     'projector',
     'python',
@@ -293,11 +303,12 @@ const NewsFeed = () => {
               <p>{article.description}</p>
 
               {hasToken ? (
-                <a href={article.url} target='_blank' rel='noopener noreferrer'>
-                  Read full article
-                </a>
+                <button onClick={() => handleArticleDetail(article.url)}>Read full article</button>
+                // <a href={article.url} target='_blank' rel='noopener noreferrer'>
+                //   Read full article
+                // </a>
               ) : (
-                <p>Log in to read this article</p>
+                <p>Register or Log in to read this article</p>
               )}
             </div>
           ))}

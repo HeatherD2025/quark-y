@@ -12,6 +12,9 @@ export const scienceNewsApi = createApi({
       query: ({ page = 1, pageSize = 10} = {}) =>
         `everything?q=physics+OR+space+OR+astrophysics&language=en&page=${page}&pageSize=${pageSize}&sortBy=publishedAt&apiKey=${NEWS_API_KEY}`,
     }),
+    // getSpeciicScienceArticles: builder.query({
+    //   query: ({articleUrl})
+    // })
   }),
 });
 

@@ -8,6 +8,7 @@ import RegistrationForm from "../components/RegistrationForm";
 import LoginForm from "../components/LoginForm";
 import News from "../pages/News";
 import Account from "../pages/Account";
+import ArticleDetail from "../pages/ArticleDetail";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import "../styles/index.css";
@@ -23,21 +24,31 @@ function App() {
         <Router>
           <Navigation />
             <Routes>
+
               {/* VISITOR ROUTES */}
               <Route path="/" element={<Home />} />
               <Route path="/news" element={<News />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegistrationForm />} />
+
               {/* USER PROTECTED ROUTES */}
               <Route 
                 path="/account" 
                 element={
                 <ProtectedRoute>
                   <Account />
-                    {/* <Route path="/user/:userId" element={<Account />}/> */}
                 </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/article/:articleUrl"
+                element={
+                  <ProtectedRoute>
+                    <ArticleDetail />
+                  </ProtectedRoute>
+                }
+              />
+
             </Routes>
         </Router>
   );

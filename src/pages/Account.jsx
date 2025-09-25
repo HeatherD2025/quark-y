@@ -9,7 +9,7 @@ import "../styles/account.css";
 const Account = () => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const authChecked = useSelector((state) => state.auth.accessToken)
+  const authChecked = useSelector((state) => state.auth.token)
   // const [updatedUserProfile] = ProfileEditor();
   const { data: user, error, isLoading } = useGetUserQuery(undefined, {
     skip: !isAuthenticated,

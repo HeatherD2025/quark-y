@@ -37,7 +37,7 @@ const RegistrationForm = () => {
       console.log("form unwrapped")
       setToken(result.token);
       console.log("token set:", result.token)
-      navigate("/Account");
+      navigate("/account");
     } catch (err) {
       const message = err.data?.message || err?.error || 'Registration failed';
       setApiError(message);
